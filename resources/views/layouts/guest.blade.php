@@ -68,7 +68,7 @@
     <div class="gradient-overlay"></div>
 
     <div class="min-h-screen flex items-center justify-center p-6">
-        <div class="w-full sm:max-w-md">
+        <div class="w-full sm:max-w-md" style="background:#e5e7eb;padding:20px;border-radius:10px;">
             <div class="mb-4 flex justify-center">
                 <a href="/" style="font-size:35px;font-weight:800;font-family:emoji;text-decoration:none;">
                     savioTrack
@@ -81,7 +81,7 @@
                 </p>
             </div>
 
-            <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up" style="background:#e5e7eb;padding:20px;border-radius:10px;">
+            <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up" style="background:transparent;box-shadow:none;">
                 {{ $slot }}
             </div>
         </div>
