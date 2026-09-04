@@ -16,9 +16,9 @@
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                 <span class="text-slate-500 sm:text-sm">$</span>
                             </div>
-                            <input type="number" step="0.01" name="amount" id="amount" value="{{ old('amount') }}" class="pl-7 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" required max="{{ $goal->current_amount }}">
+                            <input type="number" step="0.01" name="amount" id="amount" value="{{ old('amount') }}" class="pl-7 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" required max="{{ $goal->effective_saved_amount }}">
                         </div>
-                        <p class="mt-1 text-sm text-slate-500">Available: ${{ number_format($goal->current_amount, 2) }}</p>
+                        <p class="mt-1 text-sm text-slate-500">Available: ${{ number_format($goal->effective_saved_amount, 2) }}</p>
                         @error('amount') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 

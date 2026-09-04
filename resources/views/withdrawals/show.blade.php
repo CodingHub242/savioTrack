@@ -23,7 +23,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-slate-500">Current Savings</p>
-                    <p class="mt-2 text-2xl font-semibold text-slate-900">${{ number_format($goal->current_amount, 2) }}</p>
+                    <p class="mt-2 text-2xl font-semibold text-slate-900">${{ number_format($goal->effective_saved_amount, 2) }}</p>
                 </div>
                 <div class="p-3 bg-slate-50 rounded-full">
                     <svg class="h-6 w-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
