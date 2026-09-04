@@ -70,9 +70,15 @@
     <div class="min-h-screen flex items-center justify-center p-6">
         <div class="w-full sm:max-w-md">
             <div class="mb-6 flex justify-center">
-                <a href="/">
-                    <x-application-logo class="w-20 h-20 fill-current text-white" />
+                <a href="/" style="font-size:35px;font-weight:800;font-family:emoji;">
+                    savioTrack
                 </a>
+            </div>
+
+            <div class="mb-6 flex justify-center">
+                <p>
+                    Login to manage your savio savings
+                </p>
             </div>
 
             <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up">
