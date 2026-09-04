@@ -56,12 +56,17 @@ class GoalController extends Controller
         $wants = $goal->wants()->latest()->get();
         $needs = $goal->needs()->latest()->get();
         $recentDeposits = $goal->deposits()->latest()->take(5)->get();
+        $recentWithdrawals = $goal->withdrawals()
+            ->where('decision', 'approved')
+            ->latest()
+            ->take(5)
+            ->get();
         $totalWantsCost = $wants->sum('cost');
         $totalNeedsCost = $needs->sum('cost');
         $canAccessWantsNeeds = $goal->canAccessWantsNeeds();
         $canWithdraw = $goal->canWithdraw();
 
-        return view('goals.show', compact('goal', 'wants', 'needs', 'recentDeposits', 'totalWantsCost', 'totalNeedsCost', 'canAccessWantsNeeds', 'canWithdraw'));
+        return view('goals.show', compact('goal', 'wants', 'needs', 'recentDeposits', 'recentWithdrawals', 'totalWantsCost', 'totalNeedsCost', 'canAccessWantsNeeds', 'canWithdraw'));
     }
 
     public function edit($id)
