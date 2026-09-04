@@ -69,19 +69,19 @@
 
     <div class="min-h-screen flex items-center justify-center p-6">
         <div class="w-full sm:max-w-md">
-            <div class="mb-6 flex justify-center">
-                <a href="/" style="font-size:35px;font-weight:800;font-family:emoji;">
+            <div class="mb-4 flex justify-center">
+                <a href="/" style="font-size:35px;font-weight:800;font-family:emoji;text-decoration:none;">
                     savioTrack
                 </a>
             </div>
 
             <div class="mb-6 flex justify-center">
-                <p>
+                <p style="opacity:0.5;">
                     Login to manage your savio savings
                 </p>
             </div>
 
-            <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up">
+            <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up" style="background:#e5e7eb;padding:20px;border-radius:10px;">
                 {{ $slot }}
             </div>
         </div>
