@@ -41,4 +41,9 @@ return [
         'sender_id' => env('ARKESAL_SENDER_ID', 'SavioTrack'),
     ],
 
+    'deepseek' => [
+        'key' => env('DEEPSEEK_API_KEY'),
+        'api_url' => env('DEEPSEEK_API_URL', 'https://api.deepseek.com/v1/chat/completions'),
+    ],
+
 ];

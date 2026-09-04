@@ -121,7 +121,7 @@ class GoalController extends Controller
         $viewMode = $request->query('view', 'default');
 
         if ($viewMode !== 'default') {
-            $dashboardConfig = $this->aiService->arrangeDashboard($viewMode);
+            $dashboardConfig = $this->aiService->arrangeDashboard($goals, $viewMode);
             return view('dashboard.ai', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals', 'dashboardConfig', 'pendingDeposits'));
         }
 
@@ -139,6 +139,14 @@ class GoalController extends Controller
 
         $viewMode = $this->aiService->interpretArrangePrompt($prompt);
 
-        return redirect()->route('dashboard', ['view' => $viewMode]);
+        $goals = $user->goals()->latest()->get();
+        $totalSaved = $goals->sum('effective_saved_amount');
+        $totalTarget = $goals->sum('target_amount');
+        $recentDeposits = \App\Models\Deposit::where('user_id', $user->id)->latest()->take(10)->get();
+        $recentWithdrawals = \App\Models\Withdrawal::where('user_id', $user->id)->latest()->take(10)->get();
+
+        $dashboardConfig = $this->aiService->arrangeDashboard($goals, $viewMode, $prompt);
+
+        return view('dashboard.ai', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals', 'dashboardConfig'));
     }
 }
