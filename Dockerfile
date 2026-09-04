@@ -16,6 +16,7 @@ RUN apt-get update && apt-get install -y \
     libzip-dev \
     unzip \
     zip \
+    supervisor \
     && docker-php-ext-install pgsql pdo_pgsql zip \
     && rm -rf /var/lib/apt/lists/*
 
@@ -34,5 +35,9 @@ COPY . .
 
 RUN composer dump-autoload --optimize
 
+# Configure supervisord
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 EXPOSE 8000
-CMD ["php", "artisan", "serve", "--host=0.0.0.0", "--port=8000"]
+
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -4,6 +4,30 @@
         <p class="mt-1 text-sm text-slate-500">Overview of your savings goals and progress</p>
     </div>
 
+    <!-- AI Dashboard Arrangement -->
+    <div class="bg-white rounded-lg border border-slate-200 p-6 mb-8">
+        <h2 class="text-lg font-medium text-slate-900 mb-3">AI Dashboard Arrangement</h2>
+        <p class="text-sm text-slate-500 mb-4">Describe how you'd like your dashboard arranged, and let the AI optimize it for you.</p>
+
+        <form action="{{ route('dashboard.arrange') }}" method="POST" class="space-y-4">
+            @csrf
+            <div>
+                <label for="arrangement_prompt" class="block text-sm font-medium text-slate-700">Your Request</label>
+                <input type="text" name="arrangement_prompt" id="arrangement_prompt"
+                       placeholder="e.g., 'Show goals closest to completion first', 'Sort by largest savings goal', 'Prioritize deadlines coming up soon'"
+                       class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500"
+                       required>
+            </div>
+
+            <div class="flex items-center space-x-3">
+                <button type="submit" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-md hover:bg-slate-800">
+                    Arrange with AI
+                </button>
+                <a href="{{ route('dashboard', ['view' => 'default']) }}" class="text-sm text-slate-600 hover:text-slate-900">Reset to default</a>
+            </div>
+        </form>
+    </div>
+
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div class="bg-white rounded-lg border border-slate-200 p-6">
             <div class="flex items-center justify-between">

@@ -4,11 +4,9 @@ namespace App\Services;
 
 use App\Models\Goal;
 use App\Models\Deposit;
-use App\Models\Withdrawal;
 use App\Models\AiInteraction;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs\ProcessDepositJob;
-use App\Jobs\AIAnalysisJob;
 
 class DepositService
 {

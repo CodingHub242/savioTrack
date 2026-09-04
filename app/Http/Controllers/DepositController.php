@@ -31,11 +31,14 @@ class DepositController extends Controller
         $goal = Goal::where('user_id', Auth::id())->findOrFail($request->input('goal_id'));
         $validated = $request->validate([
             'amount' => 'required|numeric|min:0.01',
-            'frequency' => 'required|in:daily,weekly,monthly,one_time',
             'deposited_at' => 'required|date',
         ]);
 
-        $deposit = $this->depositService->createDeposit($goal, $validated);
+        $deposit = $this->depositService->createDeposit($goal, [
+            'amount' => $validated['amount'],
+            'frequency' => 'one_time',
+            'deposited_at' => $validated['deposited_at'],
+        ]);
 
         return redirect()->route('deposits.index', ['goal_id' => $goal->id])
             ->with('status', 'Deposit recorded successfully.');

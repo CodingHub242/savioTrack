@@ -13,6 +13,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [GoalController::class, 'dashboard'])->name('dashboard');
+    Route::post('/dashboard/arrange', [GoalController::class, 'arrangeDashboard'])->name('dashboard.arrange');
     Route::resource('goals', GoalController::class);
     Route::resource('wants', WantController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
     Route::resource('needs', NeedController::class)->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);

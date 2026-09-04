@@ -22,18 +22,6 @@
                     </div>
 
                     <div>
-                        <label for="frequency" class="block text-sm font-medium text-slate-700">Frequency</label>
-                        <select name="frequency" id="frequency" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500">
-                            @foreach(['daily', 'weekly', 'monthly', 'one_time'] as $freq)
-                                <option value="{{ $freq }}" {{ old('frequency') === $freq ? 'selected' : '' }}>
-                                    {{ ucfirst(str_replace('_', ' ', $freq)) }}
-                                </option>
-                            @endforeach
-                        </select>
-                        @error('frequency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div>
                         <label for="deposited_at" class="block text-sm font-medium text-slate-700">Date</label>
                         <input type="date" name="deposited_at" id="deposited_at" value="{{ old('deposited_at', now()->format('Y-m-d')) }}" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" required>
                         @error('deposited_at') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror

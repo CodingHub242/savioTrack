@@ -117,4 +117,18 @@ class GoalController extends Controller
 
         return view('dashboard.index', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals'));
     }
+
+    public function arrangeDashboard(Request $request)
+    {
+        $request->validate([
+            'arrangement_prompt' => 'required|string|max:2000',
+        ]);
+
+        $user = Auth::user();
+        $prompt = $request->input('arrangement_prompt');
+
+        $viewMode = $this->aiService->interpretArrangePrompt($prompt);
+
+        return redirect()->route('dashboard', ['view' => $viewMode]);
+    }
 }

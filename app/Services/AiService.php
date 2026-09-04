@@ -45,6 +45,25 @@ class AiService
         return $config;
     }
 
+    public function interpretArrangePrompt(string $prompt): string
+    {
+        $promptLower = strtolower($prompt);
+
+        if (str_contains($promptLower, 'progress') || str_contains($promptLower, 'completion') || str_contains($promptLower, 'nearest')) {
+            return 'progress';
+        }
+
+        if (str_contains($promptLower, 'savings') || str_contains($promptLower, 'largest') || str_contains($promptLower, 'amount') || str_contains($promptLower, 'money')) {
+            return 'savings';
+        }
+
+        if (str_contains($promptLower, 'deadline') || str_contains($promptLower, 'due') || str_contains($promptLower, 'date')) {
+            return 'deadlines';
+        }
+
+        return 'default';
+    }
+
     public function analyzeWithdrawal(Withdrawal $withdrawal): array
     {
         $goal = $withdrawal->goal;

@@ -57,7 +57,21 @@
         </div>
     </div>
 
-    @if($withdrawal->ai_summary)
+    @if(!$withdrawal->ai_summary)
+        <div class="bg-white rounded-lg border border-slate-200 mb-8">
+            <div class="px-6 py-4 border-b border-slate-200 flex items-center">
+                <div class="animate-spin rounded-full h-5 w-5 border-b-2 border-slate-900 mr-3"></div>
+                <h2 class="text-lg font-medium text-slate-900">AI is analyzing your withdrawal...</h2>
+            </div>
+            <div class="p-6">
+                <p class="text-slate-600">The AI is evaluating your withdrawal request based on your savings progress, wants, and needs. This analysis includes a viability score and personalized recommendation.</p>
+                <p class="text-sm text-slate-500 mt-2">Please wait while the analysis completes...</p>
+                <div class="mt-4">
+                    <a href="{{ route('withdrawals.show', $withdrawal) }}" class="text-sm text-slate-600 hover:text-slate-900">Refresh to check status</a>
+                </div>
+            </div>
+        </div>
+    @else
         <div class="bg-white rounded-lg border border-slate-200 mb-8">
             <div class="px-6 py-4 border-b border-slate-200">
                 <h2 class="text-lg font-medium text-slate-900">AI Analysis</h2>
