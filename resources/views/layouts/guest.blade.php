@@ -16,8 +16,7 @@
     </head>
     <body class="bg-gray-900 font-sans antialiased">
         <!-- Video Background -->
-        <!-- Replace the src below with your own video URL -->
-        <video autoplay muted loop playsinline class="video-background" poster="{{ asset('savio.mp4') }}">
+        <video autoplay muted loop playsinline class="video-background" poster="{{ asset('images/video-poster.jpg') }}">
             <source src="{{ asset('savio.mp4') }}" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -25,13 +24,16 @@
         <!-- Gradient Overlay -->
         <div class="gradient-overlay"></div>
 
-        <!-- Main Content -->
-        <div class="min-h-screen flex items-center justify-center p-6">
-            <div class="w-full sm:max-w-md">
-                <div class="mb-6 flex justify-center">
-                    <a href="/">
-                        <x-application-logo class="w-20 h-20 fill-current text-white" />
+        <!-- Centered Content Wrapper -->
+        <div class="relative min-h-screen flex items-center justify-center p-6">
+            <div class="w-full sm:max-w-md" style="padding: 20px;background: #e5e7eb;border-radius:10px;">
+                <div class="mb-4 flex justify-center">
+                    <a href="/" style="font-size: 35px;font-family: Apple Chancery;font-weight: 800;">
+                        savioTrack
                     </a>
+                </div>
+                <div class="mb-6 flex justify-center">
+                    <p style="opacity:0.5;"> Login to manage your savio savings </p>
                 </div>
 
                 <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up">
