@@ -82,7 +82,7 @@
             </div>
 
             <div class="mb-6 flex justify-center">
-                <hr style="height:2px;"/>
+                <hr style="height:2px;background: #00000040;width: 100%;"/>
             </div>
 
             <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up" style="background:transparent;box-shadow:none;">
