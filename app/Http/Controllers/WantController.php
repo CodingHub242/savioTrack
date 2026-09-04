@@ -22,12 +22,23 @@ class WantController extends Controller
     {
         $goal = Goal::where('user_id', Auth::id())->findOrFail($request->query('goal_id'));
 
+        if (! $goal->canAccessWantsNeeds()) {
+            return redirect()->route('goals.show', $goal)
+                ->with('status', 'Wants are only available when your goal reaches 75% of the target amount. Current progress: ' . number_format($goal->progress_percentage, 1) . '%.');
+        }
+
         return view('wants.create', compact('goal'));
     }
 
     public function store(Request $request)
     {
         $goal = Goal::where('user_id', Auth::id())->findOrFail($request->input('goal_id'));
+
+        if (! $goal->canAccessWantsNeeds()) {
+            return redirect()->route('goals.show', $goal)
+                ->with('status', 'Wants are only available when your goal reaches 75% of the target amount. Current progress: ' . number_format($goal->progress_percentage, 1) . '%.');
+        }
+
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:2000',

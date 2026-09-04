@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'arkesel' => [
+        'key' => env('ARKESAL_API_KEY'),
+        'api_url' => env('ARKESAL_API_URL', 'https://sms.arkesel.com/api/v3/send/'),
+        'sender_id' => env('ARKESAL_SENDER_ID', 'SavioTrack'),
+    ],
+
 ];

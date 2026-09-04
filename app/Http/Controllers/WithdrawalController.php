@@ -27,14 +27,25 @@ class WithdrawalController extends Controller
     {
         $goal = Goal::where('user_id', Auth::id())->findOrFail($request->query('goal_id'));
 
+        if (! $goal->canWithdraw()) {
+            return redirect()->route('goals.show', $goal)
+                ->with('status', 'Withdrawals are only available when your goal reaches 75% of the target amount. Current progress: ' . number_format($goal->progress_percentage, 1) . '%.');
+        }
+
         return view('withdrawals.create', compact('goal'));
     }
 
     public function store(Request $request)
     {
         $goal = Goal::where('user_id', Auth::id())->findOrFail($request->input('goal_id'));
+
+        if (! $goal->canWithdraw()) {
+            return redirect()->route('goals.show', $goal)
+                ->with('status', 'Withdrawals are only available when your goal reaches 75% of the target amount. Current progress: ' . number_format($goal->progress_percentage, 1) . '%.');
+        }
+
         $validated = $request->validate([
-            'amount' => 'required|numeric|min:0.01|max:' . $goal->current_amount,
+            'amount' => 'required|numeric|min:0.01|max:' . $goal->effective_saved_amount,
             'reason' => 'required|string|max:2000',
         ]);
 
