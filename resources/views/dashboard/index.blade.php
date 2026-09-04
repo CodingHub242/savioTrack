@@ -72,6 +72,25 @@
         </div>
     </div>
 
+    @if($pendingDeposits->isNotEmpty())
+        <div class="bg-white rounded-lg border border-slate-200 p-6 mb-8">
+            <div class="flex items-center justify-between">
+                <h2 class="text-lg font-medium text-slate-900">Pending Deposits</h2>
+                <a href="{{ route('deposits.pending') }}" class="text-sm text-slate-600 hover:text-slate-900">View all</a>
+            </div>
+            <div class="mt-4 space-y-3">
+                @foreach($pendingDeposits as $deposit)
+                    <div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-0">
+                        <div>
+                            <p class="text-sm font-medium text-slate-900">{{ $deposit->goal->name }}</p>
+                            <p class="text-sm text-slate-500">${{ number_format($deposit->amount, 2) }} · {{ ucfirst(str_replace('_', ' ', $deposit->frequency)) }} · {{ $deposit->deposited_at->format('M d, Y') }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
     <div class="mb-6 flex items-center justify-between">
         <a href="{{ route('goals.create') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
             <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -43,4 +43,14 @@ class DepositController extends Controller
         return redirect()->route('deposits.index', ['goal_id' => $goal->id])
             ->with('status', 'Deposit recorded successfully.');
     }
+
+    public function pending(Request $request)
+    {
+        $deposits = \App\Models\Deposit::where('user_id', Auth::id())
+            ->where('deposited_at', '>', now())
+            ->latest()
+            ->paginate(20);
+
+        return view('deposits.pending', compact('deposits'));
+    }
 }

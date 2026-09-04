@@ -108,14 +108,19 @@ class GoalController extends Controller
         $recentDeposits = \App\Models\Deposit::where('user_id', $user->id)->latest()->take(10)->get();
         $recentWithdrawals = \App\Models\Withdrawal::where('user_id', $user->id)->latest()->take(10)->get();
 
+        $pendingDeposits = \App\Models\Deposit::where('user_id', $user->id)
+            ->where('deposited_at', '>', now())
+            ->latest()
+            ->get();
+
         $viewMode = $request->query('view', 'default');
 
         if ($viewMode !== 'default') {
             $dashboardConfig = $this->aiService->arrangeDashboard($viewMode);
-            return view('dashboard.ai', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals', 'dashboardConfig'));
+            return view('dashboard.ai', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals', 'dashboardConfig', 'pendingDeposits'));
         }
 
-        return view('dashboard.index', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals'));
+        return view('dashboard.index', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals', 'pendingDeposits'));
     }
 
     public function arrangeDashboard(Request $request)
