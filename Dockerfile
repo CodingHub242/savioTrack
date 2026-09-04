@@ -2,7 +2,7 @@
 FROM node:20-alpine AS vite
 
 WORKDIR /app
-COPY package.json ./
+COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
