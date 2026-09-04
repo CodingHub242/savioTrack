@@ -6,13 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory; 
-use Illuminate\Database\Eloquent\Attributes\Fillable;
 
 class Goal extends Model
 {
     use HasFactory;
 
-    #[Fillable(['user_id', 'name', 'description', 'target_amount', 'current_amount', 'deadline', 'status', 'metadata'])]
+    
+    protected $fillable = [
+        'user_id',
+        'name',
+        'description',
+        'target_amount',
+        'current_amount',
+        'deadline',
+        'status',
+        'metadata',
+    ];
+    
     protected $casts = [
         'metadata' => 'array',
         'deadline' => 'date',
