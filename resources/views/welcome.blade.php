@@ -134,7 +134,7 @@
 <body class="bg-gray-900">
     <!-- Video Background -->
     <!-- Replace the src below with your own video URL -->
-    <video autoplay muted loop playsinline class="video-background" poster="{{ asset('images/video-poster.jpg') }}">
+    <video autoplay muted loop playsinline class="video-background" poster="{{ asset('savio.mp4') }}">
         <source src="{{asset('savio.mp4')}}" type="video/mp4">
         <!-- Fallback for browsers that don't support video -->
         Your browser does not support the video tag.
