@@ -14,11 +14,12 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-gray-900 antialiased">
+        <body class="bg-gray-900 font-sans text-gray-900 antialiased">
         <!-- Video Background -->
         <!-- Replace the src below with your own video URL -->
         <video autoplay muted loop playsinline class="video-background" poster="{{ asset('images/video-poster.jpg') }}">
-            <source src="https://cdn.coverr.co/videos/coverr-abstract-fluid-background-1564/1080p.mp4" type="video/mp4">
+            <source src="{{ asset('savio.mp4') }}" type="video/mp4">
+            <!-- Fallback for browsers that don't support video -->
             Your browser does not support the video tag.
         </video>
 
