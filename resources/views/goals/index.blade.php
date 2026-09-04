@@ -37,7 +37,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${{ number_format($goal->target_amount, 2) }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${{ number_format($goal->current_amount, 2) }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-600">${{ number_format($goal->effective_saved_amount, 2) }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center">
                                     <div class="w-32 bg-slate-200 rounded-full h-2 mr-3">

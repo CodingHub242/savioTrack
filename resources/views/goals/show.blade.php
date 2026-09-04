@@ -68,13 +68,13 @@
             </svg>
             Add Deposit
         </a>
-        <a href="{{ route('withdrawals.create', ['goal_id' => $goal->id]) }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50">
+        <a href="{{ route('withdrawals.create', ['goal_id' => $goal->id]) }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50 {{ $canWithdraw ? '' : 'opacity-50 cursor-not-allowed' }}">
             Request Withdrawal
         </a>
-        <a href="{{ route('wants.index', ['goal_id' => $goal->id]) }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50">
+        <a href="{{ route('wants.index', ['goal_id' => $goal->id]) }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50 {{ $canAccessWantsNeeds ? '' : 'opacity-50 cursor-not-allowed' }}">
             Wants
         </a>
-        <a href="{{ route('needs.index', ['goal_id' => $goal->id]) }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50">
+        <a href="{{ route('needs.index', ['goal_id' => $goal->id]) }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50 {{ $canAccessWantsNeeds ? '' : 'opacity-50 cursor-not-allowed' }}">
             Needs
         </a>
     </div>
@@ -97,7 +97,11 @@
         <div class="bg-white rounded-lg border border-slate-200">
             <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
                 <h2 class="text-lg font-medium text-slate-900">Wants</h2>
-                <a href="{{ route('wants.create', ['goal_id' => $goal->id]) }}" class="text-sm text-slate-600 hover:text-slate-900">Add</a>
+                @if($canAccessWantsNeeds)
+                    <a href="{{ route('wants.create', ['goal_id' => $goal->id]) }}" class="text-sm text-slate-600 hover:text-slate-900">Add</a>
+                @else
+                    <span class="text-sm text-slate-400">Locked</span>
+                @endif
             </div>
             <div class="p-6">
                 <div class="space-y-3">
@@ -121,7 +125,11 @@
         <div class="bg-white rounded-lg border border-slate-200">
             <div class="px-6 py-4 border-b border-slate-200 flex items-center justify-between">
                 <h2 class="text-lg font-medium text-slate-900">Needs</h2>
-                <a href="{{ route('needs.create', ['goal_id' => $goal->id]) }}" class="text-sm text-slate-600 hover:text-slate-900">Add</a>
+                @if($canAccessWantsNeeds)
+                    <a href="{{ route('needs.create', ['goal_id' => $goal->id]) }}" class="text-sm text-slate-600 hover:text-slate-900">Add</a>
+                @else
+                    <span class="text-sm text-slate-400">Locked</span>
+                @endif
             </div>
             <div class="p-6">
                 <div class="space-y-3">
