@@ -88,7 +88,7 @@
                         <div class="flex items-center justify-between text-sm">
                             <div>
                                 <span class="text-slate-500">Saved:</span>
-                                <span class="font-medium text-slate-900 ml-1">${{ number_format($goal->current_amount, 2) }}</span>
+                                <span class="font-medium text-slate-900 ml-1">${{ number_format($goal->effective_saved_amount, 2) }}</span>
                             </div>
                             <div class="text-right">
                                 <span class="text-slate-500">Target:</span>

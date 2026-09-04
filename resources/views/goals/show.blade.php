@@ -22,7 +22,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm font-medium text-slate-500">Saved</p>
-                    <p class="mt-2 text-2xl font-semibold text-slate-900">${{ number_format($goal->current_amount, 2) }}</p>
+                    <p class="mt-2 text-2xl font-semibold text-slate-900">${{ number_format($goal->effective_saved_amount, 2) }}</p>
                 </div>
                 <div class="p-3 bg-slate-50 rounded-full">
                     <svg class="h-6 w-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -78,6 +78,20 @@
             Needs
         </a>
     </div>
+
+    @if(!$canAccessWantsNeeds)
+        <div class="mb-8 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded">
+            <p class="font-medium">Wants and Needs are locked until your goal reaches 75% of the target amount.</p>
+            <p class="text-sm mt-1">Current progress: {{ number_format($goal->progress_percentage, 1) }}% of ${{ number_format($goal->target_amount, 2) }}</p>
+        </div>
+    @endif
+
+    @if(!$canWithdraw)
+        <div class="mb-8 bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded">
+            <p class="font-medium">Withdrawals are locked until your goal reaches 75% of the target amount.</p>
+            <p class="text-sm mt-1">Current progress: {{ number_format($goal->progress_percentage, 1) }}% of ${{ number_format($goal->target_amount, 2) }}</p>
+        </div>
+    @endif
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
         <div class="bg-white rounded-lg border border-slate-200">

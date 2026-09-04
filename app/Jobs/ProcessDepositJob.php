@@ -18,18 +18,15 @@ class ProcessDepositJob implements ShouldQueue
 
     public function handle(): void
     {
-        $goal = $this->deposit->goal;
-        $goal->increment('current_amount', $this->deposit->amount);
-
         AiInteraction::create([
             'user_id' => $this->deposit->user_id,
             'related_type' => Deposit::class,
             'related_id' => $this->deposit->id,
             'type' => 'deposit_processed',
-            'prompt' => "Process deposit of {$this->deposit->amount} for goal: {$goal->name}",
-            'response' => "Deposit processed. Goal current amount updated to {$goal->current_amount}.",
+            'prompt' => "Process recurring deposit of {$this->deposit->amount} for goal: {$this->deposit->goal->name}",
+            'response' => "Recurring deposit processed.",
             'context' => [
-                'goal_id' => $goal->id,
+                'goal_id' => $this->deposit->goal_id,
                 'amount' => $this->deposit->amount,
                 'frequency' => $this->deposit->frequency,
             ],

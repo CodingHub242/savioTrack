@@ -7,7 +7,9 @@ use App\Models\Want;
 use App\Models\Need;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\ArkeselDepositReminder;
 use App\Services\AiService;
+use Illuminate\Support\Facades\Notification;
 
 class GoalController extends Controller
 {
@@ -32,9 +34,22 @@ class GoalController extends Controller
             'description' => 'nullable|string|max:2000',
             'target_amount' => 'required|numeric|min:0.01',
             'deadline' => 'nullable|date',
+            'deposit_frequency' => 'required|in:none,daily,weekly,monthly,one_time',
+            'phone_number' => 'nullable|string|max:20',
         ]);
 
         $goal = Auth::user()->goals()->create($validated);
+
+        if ($goal->deposit_frequency !== 'none' && $goal->phone_number) {
+            Notification::route('arkesel', $goal->phone_number)
+                ->notify(new ArkeselDepositReminder($goal));
+        } elseif ($goal->deposit_frequency !== 'none') {
+            $user = Auth::user();
+            if ($user && $user->phone_number) {
+                Notification::route('arkesel', $user->phone_number)
+                    ->notify(new ArkeselDepositReminder($goal));
+            }
+        }
 
         return redirect()->route('goals.show', $goal)
             ->with('status', 'Goal created successfully.');
@@ -48,8 +63,10 @@ class GoalController extends Controller
         $recentDeposits = $goal->deposits()->latest()->take(5)->get();
         $totalWantsCost = $wants->sum('cost');
         $totalNeedsCost = $needs->sum('cost');
+        $canAccessWantsNeeds = $goal->canAccessWantsNeeds();
+        $canWithdraw = $goal->canWithdraw();
 
-        return view('goals.show', compact('goal', 'wants', 'needs', 'recentDeposits', 'totalWantsCost', 'totalNeedsCost'));
+        return view('goals.show', compact('goal', 'wants', 'needs', 'recentDeposits', 'totalWantsCost', 'totalNeedsCost', 'canAccessWantsNeeds', 'canWithdraw'));
     }
 
     public function edit($id)
@@ -68,6 +85,8 @@ class GoalController extends Controller
             'target_amount' => 'required|numeric|min:0.01',
             'deadline' => 'nullable|date',
             'status' => 'required|in:active,paused,completed,archived',
+            'deposit_frequency' => 'required|in:none,daily,weekly,monthly,one_time',
+            'phone_number' => 'nullable|string|max:20',
         ]);
 
         $goal->update($validated);
@@ -89,7 +108,7 @@ class GoalController extends Controller
     {
         $user = Auth::user();
         $goals = $user->goals()->latest()->get();
-        $totalSaved = $goals->sum('current_amount');
+        $totalSaved = $goals->sum('effective_saved_amount');
         $totalTarget = $goals->sum('target_amount');
         $recentDeposits = \App\Models\Deposit::where('user_id', $user->id)->latest()->take(10)->get();
         $recentWithdrawals = \App\Models\Withdrawal::where('user_id', $user->id)->latest()->take(10)->get();
@@ -97,7 +116,7 @@ class GoalController extends Controller
         $viewMode = $request->query('view', 'default');
 
         if ($viewMode !== 'default') {
-            $dashboardConfig = $this->aiService->arrangeDashboard($user, $viewMode);
+            $dashboardConfig = $this->aiService->arrangeDashboard($viewMode);
             return view('dashboard.ai', compact('goals', 'totalSaved', 'totalTarget', 'recentDeposits', 'recentWithdrawals', 'dashboardConfig'));
         }
 

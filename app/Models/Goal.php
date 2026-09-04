@@ -20,6 +20,8 @@ class Goal extends Model
         'current_amount',
         'deadline',
         'status',
+        'deposit_frequency',
+        'phone_number',
         'metadata',
     ];
     
@@ -59,6 +61,26 @@ class Goal extends Model
             return 0;
         }
 
-        return min(100, ($this->current_amount / $this->target_amount) * 100);
+        return min(100, ($this->effective_saved_amount / $this->target_amount) * 100);
+    }
+
+    public function getEffectiveSavedAmountAttribute(): float
+    {
+        $totalDeposits = $this->deposits()->sum('amount');
+        $totalWithdrawals = $this->withdrawals()
+            ->where('decision', 'approved')
+            ->sum('amount');
+
+        return max(0, $totalDeposits - $totalWithdrawals);
+    }
+
+    public function canAccessWantsNeeds(): bool
+    {
+        return $this->progress_percentage >= 75;
+    }
+
+    public function canWithdraw(): bool
+    {
+        return $this->progress_percentage >= 75;
     }
 }

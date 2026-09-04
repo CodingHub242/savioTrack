@@ -3,12 +3,13 @@
 namespace App\Services;
 
 use App\Models\Goal;
+use App\Models\Withdrawal;
 use App\Models\AiInteraction;
 use Illuminate\Support\Facades\Auth;
 
 class AiService
 {
-    public function arrangeDashboard(Goal $goal, string $viewMode): array
+    public function arrangeDashboard(string $viewMode): array
     {
         $config = match ($viewMode) {
             'progress' => [
@@ -18,7 +19,7 @@ class AiService
             ],
             'savings' => [
                 'layout' => 'savings_focused',
-                'sort_goals_by' => 'current_amount',
+                'sort_goals_by' => 'effective_saved_amount',
                 'highlight' => 'top_savers',
             ],
             'deadlines' => [
@@ -35,12 +36,10 @@ class AiService
 
         AiInteraction::create([
             'user_id' => Auth::id(),
-            'related_type' => Goal::class,
-            'related_id' => $goal->id,
             'type' => 'dashboard_arrangement',
-            'prompt' => "Arrange dashboard in {$viewMode} mode for goal: {$goal->name}",
+            'prompt' => "Arrange dashboard in {$viewMode} mode for user",
             'response' => json_encode($config),
-            'context' => ['view_mode' => $viewMode, 'goal_id' => $goal->id],
+            'context' => ['view_mode' => $viewMode],
         ]);
 
         return $config;

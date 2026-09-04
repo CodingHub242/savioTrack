@@ -21,6 +21,8 @@ class DepositService
             'deposited_at' => $data['deposited_at'],
         ]);
 
+        $goal->increment('current_amount', $data['amount']);
+
         if ($data['frequency'] !== 'one_time') {
             ProcessDepositJob::dispatch($deposit);
         }

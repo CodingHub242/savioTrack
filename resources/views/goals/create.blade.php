@@ -38,6 +38,25 @@
                         @error('deadline') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
+                    <div>
+                        <label for="deposit_frequency" class="block text-sm font-medium text-slate-700">Deposit Frequency</label>
+                        <select name="deposit_frequency" id="deposit_frequency" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" required>
+                            <option value="none">No automatic reminders</option>
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly">Monthly</option>
+                            <option value="one_time">One-time only</option>
+                        </select>
+                        @error('deposit_frequency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label for="phone_number" class="block text-sm font-medium text-slate-700">Phone Number (for SMS reminders)</label>
+                        <input type="tel" name="phone_number" id="phone_number" value="{{ old('phone_number', Auth::user()->phone_number ?? '') }}" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" placeholder="+233XXXXXXXXX">
+                        <p class="mt-1 text-sm text-slate-500">Enter your phone number to receive SMS deposit reminders via Arkesel.</p>
+                        @error('phone_number') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
                     <div class="flex items-center justify-end space-x-3">
                         <a href="{{ route('goals.index') }}" class="inline-flex items-center px-4 py-2 bg-white text-slate-700 text-sm font-medium rounded-md border border-slate-300 hover:bg-slate-50">
                             Cancel

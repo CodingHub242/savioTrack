@@ -39,9 +39,7 @@ class WithdrawalService
         ]);
 
         if ($decision === 'approved') {
-            $goal->update([
-                'current_amount' => max(0, $goal->current_amount - $withdrawal->amount),
-            ]);
+            $goal->decrement('current_amount', $withdrawal->amount);
         }
 
         AiInteraction::create([

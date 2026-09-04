@@ -41,13 +41,32 @@
                     <div>
                         <label for="status" class="block text-sm font-medium text-slate-700">Status</label>
                         <select name="status" id="status" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500">
-                            @foreach(['active', 'paused', 'completed', 'archived'] as $status)
-                                <option value="{{ $status }}" {{ old('status', $goal->status) === $status ? 'selected' : '' }}>
-                                    {{ ucfirst($status) }}
+                            @foreach(['active', 'paused', 'completed', 'archived'] as $statusOption)
+                                <option value="{{ $statusOption }}" {{ old('status', $goal->status) === $statusOption ? 'selected' : '' }}>
+                                    {{ ucfirst($statusOption) }}
                                 </option>
                             @endforeach
                         </select>
                         @error('status') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label for="deposit_frequency" class="block text-sm font-medium text-slate-700">Deposit Frequency</label>
+                        <select name="deposit_frequency" id="deposit_frequency" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" required>
+                            <option value="none" {{ old('deposit_frequency', $goal->deposit_frequency) === 'none' ? 'selected' : '' }}>No automatic reminders</option>
+                            <option value="daily" {{ old('deposit_frequency', $goal->deposit_frequency) === 'daily' ? 'selected' : '' }}>Daily</option>
+                            <option value="weekly" {{ old('deposit_frequency', $goal->deposit_frequency) === 'weekly' ? 'selected' : '' }}>Weekly</option>
+                            <option value="monthly" {{ old('deposit_frequency', $goal->deposit_frequency) === 'monthly' ? 'selected' : '' }}>Monthly</option>
+                            <option value="one_time" {{ old('deposit_frequency', $goal->deposit_frequency) === 'one_time' ? 'selected' : '' }}>One-time only</option>
+                        </select>
+                        @error('deposit_frequency') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label for="phone_number" class="block text-sm font-medium text-slate-700">Phone Number (for SMS reminders)</label>
+                        <input type="tel" name="phone_number" id="phone_number" value="{{ old('phone_number', $goal->phone_number ?? '') }}" class="mt-1 block w-full rounded-md border-slate-300 shadow-sm focus:border-slate-500 focus:ring-slate-500" placeholder="+233XXXXXXXXX">
+                        <p class="mt-1 text-sm text-slate-500">Enter your phone number to receive SMS deposit reminders via Arkesel.</p>
+                        @error('phone_number') <p class="mt-1 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="flex items-center justify-end space-x-3">
