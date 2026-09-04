@@ -7,9 +7,8 @@ use App\Models\Want;
 use App\Models\Need;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Notifications\ArkeselDepositReminder;
 use App\Services\AiService;
-use Illuminate\Support\Facades\Notification;
+use App\Jobs\SendDepositReminderJob;
 
 class GoalController extends Controller
 {
@@ -40,14 +39,10 @@ class GoalController extends Controller
 
         $goal = Auth::user()->goals()->create($validated);
 
-        if ($goal->deposit_frequency !== 'none' && $goal->phone_number) {
-            Notification::route('arkesel', $goal->phone_number)
-                ->notify(new ArkeselDepositReminder($goal));
-        } elseif ($goal->deposit_frequency !== 'none') {
-            $user = Auth::user();
-            if ($user && $user->phone_number) {
-                Notification::route('arkesel', $user->phone_number)
-                    ->notify(new ArkeselDepositReminder($goal));
+        if ($goal->deposit_frequency !== 'none') {
+            if ($goal->phone_number || Auth::user()->phone_number) {
+                SendDepositReminderJob::dispatch($goal)
+                    ->delay(now()->addSeconds(30));
             }
         }
 

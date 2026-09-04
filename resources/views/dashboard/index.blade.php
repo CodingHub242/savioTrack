@@ -48,13 +48,21 @@
         </div>
     </div>
 
-    <div class="mb-6">
+    <div class="mb-6 flex items-center justify-between">
         <a href="{{ route('goals.create') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white text-sm font-medium rounded-md hover:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-500">
             <svg class="mr-2 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
             </svg>
             New Goal
         </a>
+
+        <div class="flex items-center space-x-2">
+            <span class="text-sm text-slate-500">View:</span>
+            <a href="{{ route('dashboard', ['view' => 'default']) }}" class="px-3 py-1 text-sm rounded-md {{ request('view', 'default') === 'default' || !request('view') ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Default</a>
+            <a href="{{ route('dashboard', ['view' => 'progress']) }}" class="px-3 py-1 text-sm rounded-md {{ request('view') === 'progress' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Progress</a>
+            <a href="{{ route('dashboard', ['view' => 'savings']) }}" class="px-3 py-1 text-sm rounded-md {{ request('view') === 'savings' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Savings</a>
+            <a href="{{ route('dashboard', ['view' => 'deadlines']) }}" class="px-3 py-1 text-sm rounded-md {{ request('view') === 'deadlines' ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200' }}">Deadlines</a>
+        </div>
     </div>
 
     <div class="bg-white rounded-lg border border-slate-200">
