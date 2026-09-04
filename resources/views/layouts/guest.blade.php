@@ -69,16 +69,20 @@
 
     <div class="min-h-screen flex items-center justify-center p-6">
         <div class="w-full sm:max-w-md" style="background:#e5e7eb;padding:20px;border-radius:10px;">
-            <div class="mb-4 flex justify-center">
-                <a href="/" style="font-size:35px;font-weight:800;font-family:emoji;text-decoration:none;">
+            <div class="mb-3 flex justify-center">
+                <a href="/" style="font-size:35px;font-weight:800;font-family:cursive;text-decoration:none;">
                     savioTrack
                 </a>
             </div>
 
-            <div class="mb-6 flex justify-center">
+            <div class="mb-3 flex justify-center">
                 <p style="opacity:0.5;">
                     Login to manage your savio savings
                 </p>
+            </div>
+
+            <div class="mb-6 flex justify-center">
+                <hr style="height:2px;"/>
             </div>
 
             <div class="auth-card shadow-md overflow-hidden sm:rounded-lg animate-fade-in-up" style="background:transparent;box-shadow:none;">
