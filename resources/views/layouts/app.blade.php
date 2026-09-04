@@ -7,12 +7,65 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
+    <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <style>
+            /* Line clamp utilities */
+            .line-clamp-2 {
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+
+            /* Focus ring utilities */
+            .focus\:ring-2:focus {
+                outline: none;
+                box-shadow: 0 0 0 2px #ffffff, 0 0 0 4px #475569;
+            }
+
+            /* Table row hover */
+            tbody tr:hover {
+                background-color: #f8fafc;
+            }
+
+            /* Card hover effects */
+            .hover\:shadow-sm:hover {
+                box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            }
+
+            /* Print styles */
+            @media print {
+                .no-print {
+                    display: none !important;
+                }
+            }
+
+            /* Fade-in animations */
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .animate-fade-in-up {
+                animation: fadeInUp 0.8s ease-out;
+            }
+
+            .animate-delay-1 { animation-delay: 0.1s; }
+            .animate-delay-2 { animation-delay: 0.2s; }
+            .animate-delay-3 { animation-delay: 0.3s; }
+            .animate-delay-4 { animation-delay: 0.4s; }
+        </style>
     </head>
     <body class="font-sans antialiased text-slate-800 bg-slate-50">
         <div class="flex min-h-screen">
