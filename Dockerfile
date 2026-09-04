@@ -15,7 +15,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 WORKDIR /app
 
 COPY composer.json composer.lock ./
-RUN composer install --no-scripts --no-autoloader --no-dev --prefer-dist
+RUN composer install --no-scripts --no-autoloader --no-dev --prefer-dist npm ci npm run build
 
 COPY . .
 
